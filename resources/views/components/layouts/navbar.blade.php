@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a @class(['nav-link', 'active' => Route::is('home')]) href="{{ route('home') }}">Home</a>
+                    <a @class(['nav-link', 'active' => Route::is('home')]) href="{{ route('home') }}"><i class="bi bi-house"></i> Home</a>
                 </li>
             </ul>
         </div>

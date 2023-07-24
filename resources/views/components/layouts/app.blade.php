@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link href="{{ mix('mix/css/app.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ mix('build/css/app.css') }}" rel="stylesheet" type="text/css" />
 
         <title>{{ config('app.name') }}</title>
     </head>
@@ -14,5 +14,7 @@
         <div class="container-fluid p-3">
             {{ $slot }}
         </div>
+        
+        <script src="{{ mix('build/js/app.js') }}" type="text/javascript"></script>
     </body>
 </html>
