@@ -16,5 +16,7 @@
         </div>
         
         <script src="{{ mix('build/js/app.js') }}" type="text/javascript"></script>
+
+        @stack('page_scripts')
     </body>
 </html>
