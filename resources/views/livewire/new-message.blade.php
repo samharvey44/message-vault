@@ -1,7 +1,3 @@
-@push('page_scripts')    
-    <script src={{ mix('build/js/new-message.js') }} type="text/javascript"></script>
-@endpush
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
