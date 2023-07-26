@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\NewMessage;
+use App\Livewire\Home;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', NewMessage::class)->name('home');
+Route::get('/', Home::class)->name('home');
 Route::get('/about', fn () => 'about')->name('about');

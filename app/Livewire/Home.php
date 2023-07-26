@@ -6,7 +6,7 @@ use Livewire\Attributes\Rule;
 use App\Services\SecretService;
 use Livewire\Component;
 
-class NewMessage extends Component
+class Home extends Component
 {
     #[Rule('required', message: 'Please enter a secret.')]
     public string $secret = '';
@@ -18,6 +18,6 @@ class NewMessage extends Component
 
     public function render()
     {
-        return view('livewire.new-message');
+        return view('livewire.home');
     }
 }
