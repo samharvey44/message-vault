@@ -1,30 +1,29 @@
-import { TempusDominus } from "@eonasdan/tempus-dominus";
+import { TempusDominus, Namespace, DateTime } from "@eonasdan/tempus-dominus";
 
-const datepicker = new TempusDominus(
-    document.querySelector("input[name='expiry']"),
-    {
+document.addEventListener("livewire:initialized", () => {
+    const dateInput = document.querySelector("input[name='expiry']");
+
+    const datePicker = new TempusDominus(dateInput, {
+        defaultDate: new Date(document.getElementById("default-expiry").value),
         display: {
             icons: {
                 type: "icons",
-                time: "fa-solid fa-clock",
-                date: "fa-solid fa-calendar",
-                up: "fa-solid fa-arrow-up",
-                down: "fa-solid fa-arrow-down",
-                previous: "fa-solid fa-chevron-left",
-                next: "fa-solid fa-chevron-right",
-                today: "fa-solid fa-calendar-check",
-                clear: "fa-solid fa-trash",
-                close: "fa-solid fa-xmark",
+                time: "bi bi-clock",
+                date: "bi bi-calendar-date",
+                up: "bi bi-arrow-up-short",
+                down: "bi bi-arrow-down-short",
+                previous: "bi bi-arrow-left-short",
+                next: "bi bi-arrow-right-short",
+                today: "bi bi-calendar-check",
+                clear: "bi bi-x",
+                close: "bi bi-x-circle",
             },
-            sideBySide: false,
-            calendarWeeks: false,
             viewMode: "calendar",
             toolbarPlacement: "bottom",
-            keepOpen: false,
             buttons: {
-                today: false,
+                today: true,
                 clear: false,
-                close: false,
+                close: true,
             },
             components: {
                 calendar: true,
@@ -38,8 +37,21 @@ const datepicker = new TempusDominus(
                 seconds: false,
                 useTwentyfourHour: undefined,
             },
-            inline: false,
-            theme: "auto",
         },
-    }
-);
+        localization: {
+            format: "dd/MM/yyyy HH:mm",
+        },
+        promptTimeOnDateChange: true,
+    });
+
+    // Load the widget onto the page, preventing rough animation on first focus
+    datePicker.toggle();
+    datePicker.toggle();
+
+    // Initialize Livewire property
+    dateInput.dispatchEvent(new Event("input"));
+
+    datePicker.subscribe(Namespace.events.change, () => {
+        dateInput.dispatchEvent(new Event("input"));
+    });
+});

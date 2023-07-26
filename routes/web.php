@@ -15,4 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', Home::class)->name('home');
+
 Route::get('/about', fn () => 'about')->name('about');
+
+Route::prefix('/secret')->name('secret')->group(function () {
+    Route::get('/preview', fn () => 'preview')->name('.preview');
+    Route::get('/{token}', fn () => 'view');
+});

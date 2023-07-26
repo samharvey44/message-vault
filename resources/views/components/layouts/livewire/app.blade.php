@@ -17,6 +17,7 @@
             {{ $slot }}
         </div>
 
+        @livewireScripts
         <script src={{ mix('build/js/app.js') }} type="text/javascript"></script>
         {!! app(App\Services\LivewireAssetsService::class)->getScripts() !!}
     </body>
