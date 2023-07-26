@@ -13,8 +13,6 @@ class NewMessage extends Component
 
     public function save(): void
     {
-        $this->validate(['secret' => 'required']);
-
         app(SecretService::class)->create($this->secret);
     }
 
