@@ -7,14 +7,7 @@
         <link href="{{ mix('build/css/app.css') }}" rel="stylesheet" type="text/css" />
 
         <title>{{ config('app.name') }}</title>
-    </head>
-    <body>
-        @include('components.layouts.navbar')
+    </head> 
 
-        <div class="container-fluid p-3">
-            {{ $slot }}
-        </div>
-        
-        <script src="{{ mix('build/js/app.js') }}" type="text/javascript"></script>
-    </body>
+    {{ $slot }}
 </html>

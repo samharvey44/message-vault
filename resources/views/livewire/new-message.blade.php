@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<x-body-layout>
     <div class="row">
         <div class="col-md-12">
             <div class="row d-flex justify-content-center text-center">
@@ -32,4 +32,9 @@
             </div>
         </div>
     </div>
-</div>
+
+    <x-slot name="js">
+        <script src="{{ mix('build/js/new-message.js') }}" type="text/javascript"></script>
+    </x-slot>
+</x-body-layout>
+          
