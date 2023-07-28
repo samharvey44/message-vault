@@ -1,6 +1,6 @@
-import { TempusDominus, Namespace, DateTime } from "@eonasdan/tempus-dominus";
+import { TempusDominus, Namespace } from "@eonasdan/tempus-dominus";
 
-document.addEventListener("livewire:initialized", () => {
+const initializeDatepicker = () => {
     const dateInput = document.querySelector("input[name='expiry']");
 
     const datePicker = new TempusDominus(dateInput, {
@@ -42,6 +42,9 @@ document.addEventListener("livewire:initialized", () => {
             format: "dd/MM/yyyy HH:mm",
         },
         promptTimeOnDateChange: true,
+        restrictions: {
+            minDate: new Date(),
+        },
     });
 
     // Load the widget onto the page, preventing rough animation on first focus
@@ -54,4 +57,10 @@ document.addEventListener("livewire:initialized", () => {
     datePicker.subscribe(Namespace.events.change, () => {
         dateInput.dispatchEvent(new Event("input"));
     });
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+    initializeDatepicker();
 });
+
+initializeDatepicker();

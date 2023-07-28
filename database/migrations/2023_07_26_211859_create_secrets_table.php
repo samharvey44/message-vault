@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->longText('secret');
+            $table->longText('secret')->unique();
             $table->string('token');
             $table->dateTime('expiry');
         });

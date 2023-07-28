@@ -2,22 +2,25 @@
 
 namespace App\Livewire;
 
-use Livewire\Attributes\Rule;
 use App\Services\SecretService;
 use DateTime;
 use Livewire\Component;
 
 class Home extends Component
 {
-    #[Rule('required', message: 'Please enter a secret.')]
     public string $secret = '';
 
-    #[Rule('sometimes|nullable|date_format:d/m/Y H:i', message: 'The date entered must be in a valid format.')]
     public string $expiry = '';
 
     public function save(): void
     {
-        $this->validate();
+        $this->validate([
+            'secret' => 'required',
+            'expiry' => 'required|date_format:d/m/Y H:i|after:' . now('Europe/London')->toDateTimeString(),
+        ], [
+            'expiry.date_format' => 'The expiry time must be in valid format.',
+            'expiry.after' => 'The expiry time must be in the future.',
+        ]);
 
         $secretUrl = app(SecretService::class)->create(
             $this->secret,

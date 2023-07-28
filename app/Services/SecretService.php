@@ -23,7 +23,7 @@ class SecretService
             'expiry' => $expiry,
         ]);
 
-        return URL::temporarySignedRoute('secret', $expiry, ['token' => $token])
+        return URL::temporarySignedRoute('secret.preview', $expiry, ['token' => $token])
             . "&encryptionKey={$encryptionKey}";
     }
 }

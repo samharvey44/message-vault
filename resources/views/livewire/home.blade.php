@@ -11,7 +11,7 @@
             <div class="col-sm-12 col-md-8 col-lg-6">
                 <form wire:submit="save">
                     <div class="mb-5">
-                        <textarea class="form-control mt-1" id="secret" name="secret" rows="10" style="resize: none" placeholder="Type or paste your secret..." wire:model.blur="secret"></textarea>
+                        <textarea class="form-control mt-1" id="secret" name="secret" rows="10" style="resize: none" placeholder="Type or paste your secret..." wire:model="secret"></textarea>
 
                         @error('secret')
                             <div class="form-text text-danger">{{ $message }}</div>
@@ -22,7 +22,7 @@
 
                     <div class="mb-5">
                         <label for="expiry">Choose an expiry time</label>
-                        <input class="form-control mt-1" id="expiry" name="expiry" readonly wire:model.live="expiry">
+                        <input class="form-control mt-1" id="expiry" name="expiry" readonly wire:model="expiry">
 
                         @error('expiry')
                             <div class="form-text text-danger">{{ $message }}</div>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="d-flex">
-                        <button @disabled($errors->isNotEmpty()) class="btn btn-primary ms-auto" type="submit"><i class="bi bi-plus-circle"></i> Generate Secret</button>
+                        <button class="btn btn-primary ms-auto" type="submit"><i class="bi bi-plus-circle"></i> Generate Secret</button>
                     </div>
                 </form>
 
