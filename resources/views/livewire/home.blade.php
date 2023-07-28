@@ -35,8 +35,6 @@
                         <button class="btn btn-primary ms-auto" type="submit"><i class="bi bi-plus-circle"></i> Generate Secret</button>
                     </div>
                 </form>
-
-                <input type="hidden" id="default-expiry" value={{ now()->addHour()->toISOString() }}>
             </div>
         </div>
     </div>

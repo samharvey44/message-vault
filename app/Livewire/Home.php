@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Services\SecretService;
 use DateTime;
+use DateTimeZone;
 use Livewire\Component;
 
 class Home extends Component
@@ -11,6 +12,11 @@ class Home extends Component
     public string $secret = '';
 
     public string $expiry = '';
+
+    public function mount(): void
+    {
+        $this->expiry = now('Europe/London')->addHour()->format('d/m/Y H:i');
+    }
 
     public function save(): void
     {
@@ -24,12 +30,10 @@ class Home extends Component
 
         $secretUrl = app(SecretService::class)->create(
             $this->secret,
-            DateTime::createFromFormat('d/m/Y H:i', $this->expiry),
+            DateTime::createFromFormat('d/m/Y H:i', $this->expiry, new DateTimeZone('Europe/London'))->setTimezone(new DateTimeZone('UTC')),
         );
 
-        $this->redirect(
-            sprintf('%s?secretUrl="%s"', route('secret.preview'), urlencode($secretUrl))
-        );
+        $this->redirect(route('secret.preview', ['secretUrl' => urlencode($secretUrl)]));
     }
 
     public function render()

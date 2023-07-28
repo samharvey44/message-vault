@@ -1,10 +1,9 @@
 import { TempusDominus, Namespace } from "@eonasdan/tempus-dominus";
 
-const initializeDatepicker = () => {
-    const dateInput = document.querySelector("input[name='expiry']");
+window.addEventListener("DOMContentLoaded", () => {
+    const dateInput = document.getElementById("expiry");
 
     const datePicker = new TempusDominus(dateInput, {
-        defaultDate: new Date(document.getElementById("default-expiry").value),
         display: {
             icons: {
                 type: "icons",
@@ -51,16 +50,7 @@ const initializeDatepicker = () => {
     datePicker.toggle();
     datePicker.toggle();
 
-    // Initialize Livewire property
-    dateInput.dispatchEvent(new Event("input"));
-
     datePicker.subscribe(Namespace.events.change, () => {
         dateInput.dispatchEvent(new Event("input"));
     });
-};
-
-window.addEventListener("DOMContentLoaded", () => {
-    initializeDatepicker();
 });
-
-initializeDatepicker();

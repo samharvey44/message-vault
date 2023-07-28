@@ -8,6 +8,7 @@
 
         <link href="{{ mix('build/css/app.css') }}" rel="stylesheet" type="text/css" />
         {!! app(App\Services\LivewireAssetsService::class)->getStyles() !!}
+        @livewireStyles
     </head> 
 
     <body>
