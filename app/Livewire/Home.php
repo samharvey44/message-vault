@@ -38,7 +38,7 @@ class Home extends Component
             DateTime::createFromFormat('d/m/Y H:i', $this->expiry, new DateTimeZone($this->timezone))->setTimezone(new DateTimeZone('UTC')),
         );
 
-        $this->redirect(route('secret.preview', ['secretUrl' => urlencode($secretUrl)]));
+        redirect(route('secret.preview'))->with('generatedUrl', $secretUrl);
     }
 
     public function render()

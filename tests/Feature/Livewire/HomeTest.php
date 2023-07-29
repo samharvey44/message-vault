@@ -22,6 +22,6 @@ class HomeTest extends TestCase
             ->set('secret', Str::random(50))
             ->set('expiry', now()->addDay()->format('d/m/Y H:i'))
             ->call('save')
-            ->assertStatus(200);
+            ->assertRedirect(route('secret.preview'));
     }
 }

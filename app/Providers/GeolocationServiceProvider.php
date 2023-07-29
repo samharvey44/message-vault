@@ -26,11 +26,11 @@ class GeolocationServiceProvider extends ServiceProvider
             return;
         }
 
-        if (!App::isProduction()) {
-            Session::put('timezone', 'Europe/London');
+        // if (!App::isProduction()) {
+        //     Session::put('timezone', 'Europe/London');
 
-            return;
-        }
+        //     return;
+        // }
 
         if (Cache::get(config('ip-api.rate-limit-cache'))) {
             // We have used our API quota, we'll wait until this has released
@@ -48,10 +48,10 @@ class GeolocationServiceProvider extends ServiceProvider
             return;
         }
 
-        if ($response->header('X-Rl') === 0) {
+        if ($response->header('X-Rl') === '0') {
             // If we have used our API quota, put a cache flag in place to be released
             // when the quota refreshes.
-            Cache::put(config('ip-api.rate-limit-cache'), now()->addSeconds($response->header('X-Ttl')));
+            Cache::put(config('ip-api.rate-limit-cache'), now()->addSeconds((int) $response->header('X-Ttl')));
         }
 
         $json = $response->json();
