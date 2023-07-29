@@ -26,11 +26,11 @@ class GeolocationServiceProvider extends ServiceProvider
             return;
         }
 
-        // if (!App::isProduction()) {
-        //     Session::put('timezone', 'Europe/London');
+        if (!App::isProduction()) {
+            Session::put('timezone', 'Europe/London');
 
-        //     return;
-        // }
+            return;
+        }
 
         if (Cache::get(config('ip-api.rate-limit-cache'))) {
             // We have used our API quota, we'll wait until this has released
