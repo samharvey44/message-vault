@@ -51,7 +51,7 @@ class GeolocationServiceProvider extends ServiceProvider
         if ($response->header('X-Rl') === '0') {
             // If we have used our API quota, put a cache flag in place to be released
             // when the quota refreshes.
-            Cache::put(config('ip-api.rate-limit-cache'), now()->addSeconds((int) $response->header('X-Ttl')));
+            Cache::put(config('ip-api.rate-limit-cache'), true, now()->addSeconds((int) $response->header('X-Ttl')));
         }
 
         $json = $response->json();
