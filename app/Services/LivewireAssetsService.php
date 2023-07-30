@@ -8,7 +8,7 @@ class LivewireAssetsService
 {
     private function getExpectedFilename(): string
     {
-        return str_replace('.', '-', Request::route()->getName());
+        return str_replace('.', '-', Request::route()->getName() ?? '');
     }
 
     public function getStyles(): ?string
