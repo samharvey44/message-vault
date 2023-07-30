@@ -27,7 +27,7 @@ class Home extends Component
     {
         $this->validate([
             'secret' => 'required',
-            'expiry' => 'required|date_format:d/m/Y H:i|after:' . now('Europe/London')->toDateTimeString(),
+            'expiry' => 'required|date_format:d/m/Y H:i|after:' . now($this->timezone)->toDateTimeString(),
         ], [
             'expiry.date_format' => 'The expiry time must be in valid format.',
             'expiry.after' => 'The expiry time must be in the future.',
@@ -35,10 +35,14 @@ class Home extends Component
 
         $secretUrl = app(SecretService::class)->create(
             $this->secret,
-            DateTime::createFromFormat('d/m/Y H:i', $this->expiry, new DateTimeZone($this->timezone))->setTimezone(new DateTimeZone('UTC')),
+            DateTime::createFromFormat(
+                'd/m/Y H:i',
+                $this->expiry,
+                new DateTimeZone($this->timezone),
+            )->setTimezone(new DateTimeZone(config('app.timezone'))),
         );
 
-        redirect(route('secret.preview'))->with('generatedUrl', $secretUrl);
+        redirect()->to(route('secret.preview'))->with('generatedUrl', $secretUrl);
     }
 
     public function render()

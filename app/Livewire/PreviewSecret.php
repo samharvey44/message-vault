@@ -15,7 +15,7 @@ class PreviewSecret extends Component
         $url = Session::get('generatedUrl');
 
         if (is_null($url)) {
-            redirect(route('home'));
+            redirect()->to(route('home'));
 
             return;
         }

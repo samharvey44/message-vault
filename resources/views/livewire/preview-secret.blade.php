@@ -10,7 +10,10 @@
 
         <div class="row d-flex justify-content-center mt-3">
             <div class="col-sm-12 col-md-8 col-lg-6">
-                <input class="form-control" id="secretUrl" disabled readonly value={{ $generatedUrl }}>
+                <div class="input-group">
+                    <input class="form-control" id="secret-url" disabled readonly wire:model="generatedUrl">
+                    <span role="button" class="input-group-text" id="copy-secret"><i class="bi bi-clipboard"></i></span>
+                </div>
             </div>
         </div>
     </div>
