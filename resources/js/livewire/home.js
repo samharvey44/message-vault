@@ -1,6 +1,6 @@
 import { TempusDominus, Namespace } from "@eonasdan/tempus-dominus";
 
-const init = () => {
+document.addEventListener("DOMContentLoaded", () => {
     const dateInput = document.getElementById("expiry");
 
     const datePicker = new TempusDominus(dateInput, {
@@ -53,10 +53,4 @@ const init = () => {
     datePicker.subscribe(Namespace.events.change, () => {
         dateInput.dispatchEvent(new Event("input"));
     });
-};
-
-if (document.readyState !== "loading") {
-    init();
-} else {
-    document.addEventListener("DOMContentLoaded", init);
-}
+});

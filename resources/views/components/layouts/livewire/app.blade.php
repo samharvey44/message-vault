@@ -7,7 +7,7 @@
         <title>{{ config('app.name') }}</title>
 
         <link href="{{ mix('build/css/app.css') }}" rel="stylesheet" type="text/css" />
-        {!! app(App\Services\LivewireAssetsService::class)->getStyles() !!}
+        {{ $styles ?? '' }}
         @livewireStyles
     </head> 
 
@@ -20,6 +20,6 @@
 
         @livewireScripts
         <script src={{ mix('build/js/app.js') }} type="text/javascript"></script>
-        {!! app(App\Services\LivewireAssetsService::class)->getScripts() !!}
+        {{ $scripts ?? '' }}
     </body>
 </html>

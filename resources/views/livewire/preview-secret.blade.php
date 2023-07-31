@@ -1,3 +1,7 @@
+<x-slot name="scripts">
+    <script src="{{ mix('build/js/livewire/preview-secret.js') }}" type="text/javascript"></script>
+</x-slot>
+
 <div class="row">
     <div class="col-md-12">
         <div class="row d-flex justify-content-center text-center">

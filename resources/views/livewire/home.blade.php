@@ -1,3 +1,11 @@
+<x-slot name="scripts">
+    <script src="{{ mix('build/js/livewire/home.js') }}" type="text/javascript"></script>
+</x-slot>
+
+<x-slot name="styles">
+    <link href="{{ mix('build/css/livewire/home.css') }}" rel="stylesheet" type="text/css" />
+</x-slot>
+
 <div class="row">
     <div class="col-md-12">
         <div class="row d-flex justify-content-center text-center">

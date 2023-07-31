@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Services\SecretService;
 use DateTime;
 use DateTimeZone;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
@@ -45,8 +46,8 @@ class Home extends Component
         redirect()->to(route('secret.preview'))->with('generatedUrl', $secretUrl);
     }
 
-    public function render()
+    public function render(): View
     {
-        return view('livewire.home');
+        return view('livewire.home')->layout(config('livewire.layout'));
     }
 }

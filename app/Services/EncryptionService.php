@@ -6,17 +6,18 @@ use Illuminate\Encryption\Encrypter;
 
 class EncryptionService
 {
+    private function getEncrypter(?string $key): Encrypter
+    {
+        return new Encrypter($key ?? config('app.key'), strtolower(config('app.cipher')));
+    }
+
     public function encrypt(string $value, ?string $key = null): string
     {
-        $encrypter = new Encrypter($key ?? config('app.key'), strtolower(config('app.cipher')));
-
-        return $encrypter->encrypt($value);
+        return $this->getEncrypter($key)->encrypt($value);
     }
 
     public function decrypt(string $value, ?string $key = null): string
     {
-        $encrypter = new Encrypter($key ?? config('app.key'), strtolower(config('app.cipher')));
-
-        return $encrypter->decrypt($value);
+        return $this->getEncrypter($key)->decrypt($value);
     }
 }

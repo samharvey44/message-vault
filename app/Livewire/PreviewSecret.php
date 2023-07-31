@@ -2,9 +2,9 @@
 
 namespace App\Livewire;
 
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
+use Illuminate\Contracts\View\View;
 
 class PreviewSecret extends Component
 {
@@ -23,8 +23,8 @@ class PreviewSecret extends Component
         $this->generatedUrl = $url;
     }
 
-    public function render()
+    public function render(): View
     {
-        return view('livewire.preview-secret');
+        return view('livewire.preview-secret')->layout(config('livewire.layout'));
     }
 }

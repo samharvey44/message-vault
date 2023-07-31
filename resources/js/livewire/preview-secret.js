@@ -1,4 +1,4 @@
-const init = () => {
+document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("copy-secret").addEventListener("click", () => {
         navigator.clipboard
             .writeText(document.getElementById("secret-url").value)
@@ -11,10 +11,4 @@ const init = () => {
                 );
             });
     });
-};
-
-if (document.readyState !== "loading") {
-    init();
-} else {
-    document.addEventListener("DOMContentLoaded", init);
-}
+});
