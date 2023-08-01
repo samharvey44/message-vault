@@ -12,7 +12,7 @@
     </head> 
 
     <body>
-        @include('components.layouts.navbar')
+        @include('layouts.navbar')
 
         <div class="container-fluid p-3">
             {{ $slot }}

@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('secrets', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-
-            $table->longText('secret');
-            $table->string('token')->unique();
-            $table->dateTime('expiry');
-            $table->dateTime('viewed_at')->nullable();
         });
     }
 
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('secrets');
+        Schema::dropIfExists('files');
     }
 };

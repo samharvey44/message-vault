@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Secret;
+use Carbon\CarbonImmutable;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class ClearExpiredSecrets extends Command
@@ -14,7 +16,13 @@ class ClearExpiredSecrets extends Command
 
     public function handle()
     {
-        $expired = Secret::whereDate('expiry', '<=', now()->toDateTimeString())->get();
+        $now = CarbonImmutable::now();
+
+        $expired = Secret::where('expiry', '<=', $now->toDateTimeString())
+            ->orWhere(function (Builder $sq) use ($now) {
+                $sq->whereNotNull('viewed_at')->where('viewed_at', '<=', $now->subHour()->toDateTimeString());
+            })
+            ->get();
 
         DB::transaction(function () use ($expired) {
             $expired->each(fn (Secret $secret) => $secret->delete());

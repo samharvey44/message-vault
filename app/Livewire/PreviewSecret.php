@@ -5,9 +5,11 @@ namespace App\Livewire;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Locked;
 
 class PreviewSecret extends Component
 {
+    #[Locked]
     public string $generatedUrl;
 
     public function mount(): void

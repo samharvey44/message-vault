@@ -24,4 +24,14 @@ class SecretFactory extends Factory
     {
         return $this->state(fn (array $attributes) => ['expiry' => now()->subDay()]);
     }
+
+    public function viewedUnderAnHourAgo(): Factory
+    {
+        return $this->state(fn (array $attributes) => ['viewed_at' => now()->subMinutes(30)]);
+    }
+
+    public function viewedOverAnHourAgo(): Factory
+    {
+        return $this->state(fn (array $attributes) => ['viewed_at' => now()->subHours(2)]);
+    }
 }

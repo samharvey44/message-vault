@@ -9,6 +9,10 @@ mix.js(
     "resources/js/livewire/preview-secret.js",
     "build/js/livewire/preview-secret.js"
 );
+mix.js(
+    "resources/js/livewire/view-secret.js",
+    "build/js/livewire/view-secret.js"
+);
 
 if (mix.inProduction()) {
     mix.version();

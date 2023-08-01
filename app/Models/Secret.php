@@ -13,9 +13,11 @@ class Secret extends Model
         'secret',
         'token',
         'expiry',
+        'viewed_at',
     ];
 
     protected $dates = [
         'expiry',
+        'viewed_at',
     ];
 }

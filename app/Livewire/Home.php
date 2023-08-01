@@ -8,9 +8,11 @@ use DateTimeZone;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
+use Livewire\Attributes\Locked;
 
 class Home extends Component
 {
+    #[Locked]
     public string $timezone;
 
     public string $secret = '';
@@ -30,6 +32,7 @@ class Home extends Component
             'secret' => 'required',
             'expiry' => 'required|date_format:d/m/Y H:i|after:' . now($this->timezone)->toDateTimeString(),
         ], [
+            'secret.required' => 'Please enter a secret!',
             'expiry.date_format' => 'The expiry time must be in valid format.',
             'expiry.after' => 'The expiry time must be in the future.',
         ]);

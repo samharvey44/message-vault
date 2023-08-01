@@ -13,14 +13,19 @@ class SecretDeletionTest extends TestCase
 
     public function test_expired_secrets_are_deleted(): void
     {
-        $notExpired = rand(1, 10);
-        $expired = rand(11, 20);
+        $notExpired = 2;
+        $viewedUnderAnHourAgo = 3;
+
+        $expired = 10;
+        $viewedOverAnHourAgo = 11;
 
         Secret::factory($notExpired)->create();
+        Secret::factory($viewedUnderAnHourAgo)->viewedUnderAnHourAgo()->create();
         Secret::factory($expired)->expired()->create();
+        Secret::factory($viewedOverAnHourAgo)->viewedOverAnHourAgo()->create();
 
         Artisan::call('secrets:clear-expired');
 
-        $this->assertCount($notExpired, Secret::all());
+        $this->assertCount($notExpired + $viewedUnderAnHourAgo, Secret::all());
     }
 }
