@@ -75,7 +75,7 @@ class Home extends Component
                     )->setTimezone(new DateTimeZone(config('app.timezone'))),
                 );
 
-                redirect()->to(route('secret.preview'))->with('generatedUrl', $secretUrl);
+                redirect()->route('secret.preview')->with('generatedUrl', $secretUrl);
             },
         );
 

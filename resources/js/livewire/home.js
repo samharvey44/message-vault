@@ -53,4 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
     datePicker.subscribe(Namespace.events.change, () => {
         dateInput.dispatchEvent(new Event("input"));
     });
+
+    if (document.getElementById("session-errors").value) {
+        window.notyf.error(document.getElementById("session-errors").value);
+    }
 });

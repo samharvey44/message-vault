@@ -5,6 +5,9 @@ namespace App\Livewire;
 use App\Models\File;
 use App\Models\Secret;
 use App\Services\EncryptionService;
+use Carbon\Carbon;
+use Carbon\CarbonImmutable;
+use DateTime;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
@@ -25,12 +28,16 @@ class ViewSecret extends Component
     #[Locked]
     public bool $filesDownloaded = false;
 
+    #[Locked]
+    public DateTime $downloadValidUntil;
+
     public function mount(string $token): void
     {
+        $now = CarbonImmutable::now();
+
         $secret = Secret::where('token', $token)
-            ->where('expiry', '>', now()->toDateTimeString())
+            ->where('expiry', '>', $now->toDateTimeString())
             ->whereNull('viewed_at')
-            ->with('files')
             ->first();
 
         abort_unless((bool) $secret, 404);
@@ -41,14 +48,22 @@ class ViewSecret extends Component
         );
         $this->files = $secret->files;
 
-        if (is_null($secret->viewed_at)) {
-            $secret->update(['viewed_at' => now()]);
-        }
+        // Add a download validity time so that we can check whether
+        // file downloads should still be valid before executing
+        $this->downloadValidUntil = min(Carbon::parse($secret->expiry), $now->addHour());
+
+        $secret->update(['viewed_at' => $now]);
     }
 
     public function downloadFiles(): ?BinaryFileResponse
     {
         if ($this->filesDownloaded) {
+            return null;
+        }
+
+        if ($this->downloadValidUntil <= now()) {
+            redirect()->route('home')->with('errors', 'Secret had expired!');
+
             return null;
         }
 

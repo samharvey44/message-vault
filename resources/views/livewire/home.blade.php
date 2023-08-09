@@ -64,4 +64,6 @@
             </div>
         </div>
     </div>
+
+    <input type="hidden" id="session-errors" value="{{ Session::get('errors') }}">
 </div>

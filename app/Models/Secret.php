@@ -22,6 +22,10 @@ class Secret extends Model
         'viewed_at',
     ];
 
+    protected $with = [
+        'files',
+    ];
+
     public function files(): HasMany
     {
         return $this->hasMany(File::class, 'secret_id');
