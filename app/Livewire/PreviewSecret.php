@@ -27,6 +27,6 @@ class PreviewSecret extends Component
 
     public function render(): View
     {
-        return view('livewire.preview-secret')->layout(config('livewire.layout'));
+        return view('livewire.preview-secret');
     }
 }

@@ -21,7 +21,7 @@ class Home extends Component
 
     public function mount(): void
     {
-        $this->timezone = Session::get('timezone') ?? 'Europe/London';
+        $this->timezone = Session::get('timezone');
 
         $this->expiry = now($this->timezone)->addHour()->format('d/m/Y H:i');
     }
@@ -51,6 +51,6 @@ class Home extends Component
 
     public function render(): View
     {
-        return view('livewire.home')->layout(config('livewire.layout'));
+        return view('livewire.home');
     }
 }

@@ -34,6 +34,6 @@ class ViewSecret extends Component
 
     public function render()
     {
-        return view('livewire.view-secret')->layout(config('livewire.layout'));
+        return view('livewire.view-secret');
     }
 }
