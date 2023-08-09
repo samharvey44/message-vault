@@ -27,6 +27,13 @@ class SecretService
             ]);
 
             foreach ($files as $uploadedFile) {
+                $filePath = $uploadedFile->getRealPath();
+                $fileContents = file_get_contents($filePath);
+
+                // Overwrite the stored file in order to encrypt it
+                $encryptedFileContents = app(EncryptionService::class)->encrypt($fileContents, $encryptionKey);
+                file_put_contents($filePath, $encryptedFileContents);
+
                 $path = $uploadedFile->store('secret-files');
 
                 $file = File::make([

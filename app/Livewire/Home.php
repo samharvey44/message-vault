@@ -38,7 +38,9 @@ class Home extends Component
 
     public function clearFiles(): void
     {
-        $this->files = [];
+        foreach ($this->files as $file) {
+            $file->delete();
+        }
 
         // Cause the input field to rebuild itself, therefore ensuring the
         // field's description text will remain up-to-date
