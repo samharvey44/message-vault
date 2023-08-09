@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\About;
 use App\Livewire\Home;
 use App\Livewire\PreviewSecret;
 use App\Livewire\ViewSecret;
@@ -17,8 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', Home::class)->name('home');
-
-Route::get('/about', fn () => 'about')->name('about');
+Route::get('/about', About::class)->name('about');
 
 Route::prefix('/secret')->name('secret.')->group(function () {
     Route::get('/preview', PreviewSecret::class)->name('preview');
