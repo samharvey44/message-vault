@@ -3,12 +3,12 @@
         <div class="row d-flex justify-content-center text-center">
             <div class="col-sm-12 col-md-8 col-lg-6">
                 <h2 class="fw-bolder">About Message Vault</h2>
-                <h6>A bit of background information about the application</h6>
+                <h6 class="fst-italic">A bit of background information about the application.</h6>
             </div>  
         </div>
 
         <div class="row d-flex align-items-center flex-column mt-3 text-center">
-            <div class="col-sm-12 col-md-8 col-lg-5">
+            <div class="col-sm-12 col-md-8 col-lg-6">
                 <h6 class="fw-bolder">What is Message Vault?</h6>
                 <p>
                     Message Vault is an easy way to transmit messages and files whilst keeping them
