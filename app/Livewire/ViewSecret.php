@@ -53,7 +53,7 @@ class ViewSecret extends Component
 
         // Add a download validity time so that we can check whether
         // file downloads should still be valid before executing
-        $this->downloadValidUntil = min(Carbon::parse($secret->expiry), $now->addHour());
+        $this->downloadValidUntil = min(Carbon::parse($secret->expiry)->toDate(), $now->addHour()->toDate());
 
         $secret->update(['viewed_at' => $now]);
     }
