@@ -11,9 +11,9 @@ use Illuminate\Support\Str;
 
 class SecretService
 {
-    public function create(string $secret, array $files, DateTime $expiry): string
+    public function create(string $secret, array $files, DateTime $expiry, ?string $encryptionKey = null): string
     {
-        $encryptionKey = Str::random(32);
+        $encryptionKey ??= Str::random(32);
 
         do {
             $token = Str::random();
@@ -27,13 +27,6 @@ class SecretService
             ]);
 
             foreach ($files as $uploadedFile) {
-                $filePath = $uploadedFile->getRealPath();
-                $fileContents = file_get_contents($filePath);
-
-                // Overwrite the stored file in order to encrypt it
-                $encryptedFileContents = app(EncryptionService::class)->encrypt($fileContents, $encryptionKey);
-                file_put_contents($filePath, $encryptedFileContents);
-
                 $path = $uploadedFile->store('secret-files');
 
                 $file = File::make([

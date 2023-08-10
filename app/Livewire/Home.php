@@ -2,16 +2,19 @@
 
 namespace App\Livewire;
 
+use App\Services\EncryptionService;
 use App\Services\SecretService;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Livewire\Attributes\Locked;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
+use Illuminate\Support\Str;
 
 class Home extends Component
 {
@@ -29,11 +32,33 @@ class Home extends Component
     #[Locked]
     public int $filesUploadIteration = 1;
 
+    #[Locked]
+    public string $encryptionKey;
+
     public function mount(): void
     {
         $this->timezone = Session::get('timezone');
-
         $this->expiry = now($this->timezone)->addHour()->format('d/m/Y H:i');
+        $this->encryptionKey = Str::random(32);
+    }
+
+    public function updating(string $property, mixed $value): void
+    {
+        if ($property !== 'files') {
+            return;
+        }
+
+        foreach (Arr::wrap($value) as $uploadedFile) {
+            $filePath = $uploadedFile->getRealPath();
+            $fileContents = file_get_contents($filePath);
+
+            // Livewire will store the uploaded file in its temporary folder ready for usage later.
+            // However, this means we will have unencrypted files stored, which defeats the purpose.
+            // To prevent this, we'll overwrite uploaded files with the encrypted equivalent of their
+            // value, ensuring we aren't going to be holding any unencrypted files.
+            $encryptedFileContents = app(EncryptionService::class)->encrypt($fileContents, $this->encryptionKey);
+            file_put_contents($filePath, $encryptedFileContents);
+        }
     }
 
     public function clearFiles(): void
@@ -75,6 +100,7 @@ class Home extends Component
                         $this->expiry,
                         new DateTimeZone($this->timezone),
                     )->setTimezone(new DateTimeZone(config('app.timezone'))),
+                    $this->encryptionKey,
                 );
 
                 redirect()->route('secret.preview')->with('generatedUrl', $secretUrl);
