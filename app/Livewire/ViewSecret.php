@@ -31,6 +31,9 @@ class ViewSecret extends Component
     #[Locked]
     public DateTime $downloadValidUntil;
 
+    #[Locked]
+    public string $encryptionKey;
+
     public function mount(string $token): void
     {
         $now = CarbonImmutable::now();
@@ -44,7 +47,7 @@ class ViewSecret extends Component
 
         $this->secretText = app(EncryptionService::class)->decrypt(
             $secret->secret,
-            Request::query('encryptionKey'),
+            $this->encryptionKey = Request::query('encryptionKey'),
         );
         $this->files = $secret->files;
 
@@ -79,7 +82,13 @@ class ViewSecret extends Component
 
         if ($zip->open($path, ZipArchive::CREATE) === true) {
             $this->files->each(function (File $file) use ($zip) {
-                $zip->addFile(Storage::path($file->path), $file->client_name);
+                $zip->addFromString(
+                    $file->client_name,
+                    app(EncryptionService::class)->decrypt(
+                        file_get_contents(Storage::path($file->path)),
+                        $this->encryptionKey,
+                    ),
+                );
             });
 
             $zip->close();
